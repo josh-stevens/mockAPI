@@ -1,7 +1,9 @@
 module.exports = function(app) {
   return {
     create: function(req, res) {
+      console.log("Request received: ", req.body)
       app.post('/' + req.body.endpoint, function(req, res) {
+        console.log("request received");
         res.status(200).send({"success":"true"});
       });
       res.send(200);
