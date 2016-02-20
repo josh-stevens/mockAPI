@@ -1,10 +1,14 @@
 $('#create').on('submit', function(e){
   e.preventDefault();
-  var userEndpoint = $('#endpoint').val();
+  var userEndpoint    = $('#endpoint').val(),
+      exampleResponse = JSON.parse($('#example-response').val().replace(/\s+/g, ''));
   $.ajax({
     method: 'POST',
     contentType: 'application/json',
-    data: JSON.stringify({"endpoint": userEndpoint}),
+    data: JSON.stringify({
+      "endpoint": userEndpoint,
+      "exampleResponse": exampleResponse
+    }),
     url: '/api/create',
     success: function(data) {
       $('#create-response').text('Endpoint created at /api/' + userEndpoint);
@@ -31,7 +35,9 @@ $('#delete').on('submit', function(e){
       $('#delete-endpoint').val('');
     },
     error: function(err) {
-      console.err(err);
+      if(err.status === 404) {
+        $('#delete-response').text('No endpoint found at /api/' + userEndpoint);
+      }
     }
   });
 });
@@ -44,7 +50,10 @@ $('#test').on('submit', function(e){
     contentType: 'application/json',
     url: '/api/' + userEndpoint,
     success: function(data) {
-      $('#test-response').text('Response received: ' + JSON.stringify(data));
+      $('#test-response').html('Response received: ' + JSON.stringify(data, null, '<br>'));
+    },
+    error: function(err) {
+      $('#test-response').text('Error received: ' + err.status + ' ' + err.statusText);
     }
   })
 });
