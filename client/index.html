@@ -28,18 +28,7 @@
           <div id="create-response">
           </div>
         </div>
-        <div id="deleteForm" class="col-lg-4">
-          <form id="delete">
-            <div class="form-group">
-              <label for="delete-endpoint">Delete Endpoint</label>
-              <input id="delete-endpoint" class="form-control" placeholder="URL, e.g. 'realtime-statistics/batch'"></input>
-            </div>
-            <button class="btn btn-danger">Delete</button>
-          </form>
-          <div id="delete-response">
-          </div>
-        </div>
-        <div id="testForm" class="col-lg-4">
+        <div id="testForm" class="col-lg-8">
           <form id="test">
             <div class="form-group">
               <label for="test-endpoint">Test</label>
@@ -53,7 +42,18 @@
       </div>
       <br>
       <div class="row">
-        <div id="listForm" class="col-lg-12">
+        <div id="deleteForm" class="col-lg-4">
+          <form id="delete">
+            <div class="form-group">
+              <label for="delete-endpoint">Delete Endpoint</label>
+              <input id="delete-endpoint" class="form-control" placeholder="URL, e.g. 'realtime-statistics/batch'"></input>
+            </div>
+            <button class="btn btn-danger">Delete</button>
+          </form>
+          <div id="delete-response">
+          </div>
+        </div>
+        <div id="listForm" class="col-lg-8">
           <form id="list">
             <button class="btn btn-default">Get Endpoints</button>
           </form>

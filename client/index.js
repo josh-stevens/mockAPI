@@ -50,7 +50,7 @@ $('#test').on('submit', function(e){
     contentType: 'application/json',
     url: '/api/' + userEndpoint,
     success: function(data) {
-      $('#test-response').html('Response received: ' + JSON.stringify(data, null, '<br>'));
+      $('#test-response').html('Response received: <pre><code>' + JSON.stringify(data, null, 2) + '</pre></code>');
     },
     error: function(err) {
       $('#test-response').text('Error received: ' + err.status + ' ' + err.statusText);
