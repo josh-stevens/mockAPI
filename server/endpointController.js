@@ -5,11 +5,16 @@ module.exports = function(app) {
   Endpoint = Endpoint(app, createResponse);
   return {
     fetch: function(req, res) {
-      var body = [];
-      for(var i = 4; i < app.stack.length; i++) {
-        body.push(app.stack[i].route.path);
-      }
-      res.status(200).send(body);
+      Endpoint.find(function(err, endpoints){
+        if(err) console.error(err);
+        else {
+          var body = [];
+          endpoints.forEach(function(item) {
+            body.push('/' + item.endpoint);
+          });
+          res.status(200).send(body);
+        }
+      });
     },
     create: function(req, res) {
       Endpoint.where('endpoint', req.body.endpoint).findOne(function(err, alreadyExistingEndpoint){
@@ -41,15 +46,16 @@ module.exports = function(app) {
       //TODO: update existing endpoints
     },
     delete: function(req, res) {
-      // TODO: Refactor to delete from DB!
-      var route     = req.params.endpoint,
-          oldLength = app.stack.length;
-      app.stack = app.stack.filter(function(item, index) {
-        return item.route.path !== '/' + route;
+      var route = req.params.endpoint;
+      Endpoint.remove({endpoint: route}, function(err){
+        if(err) res.sendStatus(404);
+        else {
+          app.stack = app.stack.filter(function(item, index) {
+            return item.route.path !== '/' + route;
+          });
+          res.sendStatus(200);
+        }
       });
-      if (oldLength === app.stack.length) {
-        res.sendStatus(404);
-      } else res.sendStatus(200);
     }
   };
 };
