@@ -10,8 +10,6 @@ module.exports = function(app, createResponse) {
 
   var Endpoint = mongoose.model('Endpoint', endpointSchema);
 
-
-
   Endpoint.find(function(err, endpoints){
     if (err) console.error(err);
     else {

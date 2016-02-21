@@ -28,16 +28,16 @@ module.exports = function(app) {
               endpoint: req.body.endpoint,
               exampleResponse: JSON.stringify(req.body.exampleResponse)
             }).save(function(err, newEndpoint) {
-              if(err) return console.error(err);
+              if(err) res.sendStatus(500);
               else{
-                console.log(newEndpoint);
+                var responseBody = createResponse(req.body.exampleResponse);
+                app.post('/' + req.body.endpoint, function(req, res) {
+                  res.status(200).send(responseBody());
+                });
+                res.sendStatus(200);
               }
             });
-            var responseBody = createResponse(req.body.exampleResponse);
-            app.post('/' + req.body.endpoint, function(req, res) {
-              res.status(200).send(responseBody());
-            });
-            res.sendStatus(200);
+
           }
         }
       })
