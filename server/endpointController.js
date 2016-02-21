@@ -35,12 +35,13 @@ module.exports = function(app) {
             res.sendStatus(200);
           }
         }
-      })  
+      })
     },
     update: function(req, res) {
       //TODO: update existing endpoints
     },
     delete: function(req, res) {
+      // TODO: Refactor to delete from DB!
       var route     = req.params.endpoint,
           oldLength = app.stack.length;
       app.stack = app.stack.filter(function(item, index) {
