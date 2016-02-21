@@ -1,8 +1,8 @@
 
 module.exports = function(app) {
-  var routeController = require('./routeController.js')(app);
-  app.get('/list', routeController.fetch);
-  app.post('/create', routeController.create);
-  app.put('/:endpoint', routeController.update);
-  app.delete('/:endpoint', routeController.delete);
+  var endpointController = require('./endpointController.js')(app);
+  app.get('/list', endpointController.fetch);
+  app.post('/create', endpointController.create);
+  app.put('/:endpoint', endpointController.update);
+  app.delete('/:endpoint', endpointController.delete);
 };
