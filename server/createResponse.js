@@ -1,6 +1,6 @@
 var randomizer = function(key, value) {
-  if (key !== "status" && typeof value === "number") {
-    return Math.floor(Math.random() * 100);
+  if (key !== "status" && typeof value === "number" || value === "0") {
+    return Math.floor(Math.random() * 10000);
   } else return value;
 };
 

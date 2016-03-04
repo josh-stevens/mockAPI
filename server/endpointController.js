@@ -3,7 +3,7 @@ var createResponse = require('./createResponse.js'),
 
 module.exports = function(app) {
   Endpoint = Endpoint(app, createResponse);
-  return {
+  var controller = {
     fetch: function(req, res) {
       Endpoint.find(function(err, endpoints){
         if(err) console.error(err);
@@ -29,11 +29,12 @@ module.exports = function(app) {
               exampleResponse: JSON.stringify(req.body.exampleResponse)
             }).save(function(err, newEndpoint) {
               if(err) res.sendStatus(500);
-              else{
+              else {
                 var responseBody = createResponse(req.body.exampleResponse);
                 app.post('/' + req.body.endpoint, function(req, res) {
                   res.status(200).send(responseBody());
                 });
+                app.delete('/' + req.body.endpoint, controller.delete);
                 res.sendStatus(200);
               }
             });
@@ -46,7 +47,7 @@ module.exports = function(app) {
       //TODO: update existing endpoints
     },
     delete: function(req, res) {
-      var route = req.params.endpoint;
+      var route = req.route.path.slice(1);
       Endpoint.remove({endpoint: route}, function(err){
         if(err) res.sendStatus(404);
         else {
@@ -58,4 +59,5 @@ module.exports = function(app) {
       });
     }
   };
+  return controller;
 };
